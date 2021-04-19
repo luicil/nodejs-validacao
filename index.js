@@ -20,5 +20,5 @@ app.use(session({
 }));
 
 app.listen(port,() =>{
-    console.log("API iniciada com sucesso !");
+    console.log("Servidor rodando !");
 });

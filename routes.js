@@ -1,14 +1,23 @@
 const express = require("express");
 const router = express.Router();
-const flash = require("express-flash");
+
 
 router.get("/", (req, res) =>{
-    res.render("index");
+
+    var emailErr = req.flash("emailErr");
+    var pontosErr = req.flash("pontosErr");
+    var nomeErr = req.flash("nomeErr");
+    emailErr = (emailErr == undefined || emailErr.length == 0) ? undefined : emailErr;
+    pontosErr = (pontosErr == undefined || pontosErr.length == 0) ? undefined : pontosErr;
+    nomeErr = (nomeErr == undefined || nomeErr.length == 0) ? undefined : nomeErr;
+
+    res.render("index", {emailErr, pontosErr, nomeErr});
+    
 });
 
 router.post("/form", (req, res) =>{
     var {email, nome, pontos} = req.body;
-    
+
     var emailErr = "";
     var pontosErr = "";
     var nomeErr = "";
@@ -29,6 +38,9 @@ router.post("/form", (req, res) =>{
     };
     
     if(err){
+        req.flash("emailErr", emailErr);
+        req.flash("pontosErr", pontosErr);
+        req.flash("nomeErr", nomeErr);
         res.redirect("/");
     } else {
         res.send("OK");

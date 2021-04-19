@@ -29,11 +29,11 @@ router.post("/form", (req, res) =>{
     };
     
     if(err){
-
+        res.redirect("/");
     } else {
         res.send("OK");
     };
-    
+
 });
 
 module.exports = router;
